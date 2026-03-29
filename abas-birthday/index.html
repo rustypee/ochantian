@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Aba's Birthday · Sardinia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #f5f0e8;
+    --coral: #e07b5a;
+    --amber: #d4a843;
+    --slate: #3a4a5c;
+    --text: #1e2a35;
+    --soft: #7a8a9a;
+    --sea: #2a7a9c;
+    --sea-light: #e4f2f8;
+    --terracotta: #c4614a;
+    --olive: #7a8a4a;
+    --gold: #c8942a;
+    --lavender: #7a6a9a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+  .header { background: var(--slate); color: white; padding: 18px 20px 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  .header-top { display: flex; align-items: center; justify-content: space-between; }
+  .header h1 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; }
+  .header .subtitle { font-size: 0.7rem; opacity: 0.6; font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+  .home-btn { display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.25); border-radius: 20px; padding: 6px 12px; font-size: 0.7rem; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; text-decoration: none; letter-spacing: 0.04em; flex-shrink: 0; }
+
+  .day-tabs { display: flex; gap: 6px; padding: 12px 16px; overflow-x: auto; background: white; border-bottom: 1px solid #e0e8ec; scrollbar-width: none; position: sticky; top: 62px; z-index: 99; }
+  .day-tabs::-webkit-scrollbar { display: none; }
+  .day-tab { flex-shrink: 0; padding: 6px 14px; border-radius: 20px; border: 1.5px solid #d0dce4; background: transparent; font-size: 0.72rem; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--soft); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .day-tab.active { background: var(--slate); color: white; border-color: var(--slate); }
+
+  .content { padding: 0 0 80px; }
+  .day-panel { display: none; }
+  .day-panel.active { display: block; }
+
+  .day-hero { padding: 20px 20px 16px; background: white; border-bottom: 1px solid #e8eef2; }
+  .day-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--soft); font-weight: 500; margin-bottom: 4px; }
+  .day-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--text); line-height: 1.25; }
+  .day-subtitle { font-size: 0.75rem; color: var(--soft); margin-top: 4px; font-style: italic; }
+
+  .hotel-banner { margin: 12px 16px 0; background: linear-gradient(135deg, #e4f2f8, #d8ecf4); border-left: 3px solid var(--sea); border-radius: 0 10px 10px 0; padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+  .hotel-banner-icon { font-size: 1.2rem; }
+  .hotel-banner-label { font-size: 0.68rem; color: var(--sea); font-weight: 500; }
+  .hotel-banner-name { font-size: 0.82rem; color: var(--text); font-weight: 600; margin-top: 1px; }
+  .hotel-banner-note { font-size: 0.68rem; color: var(--soft); font-style: italic; margin-top: 1px; }
+
+  .stops { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .stop-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+  .stop-inner { display: flex; align-items: stretch; min-height: 68px; }
+  .stop-accent { width: 5px; flex-shrink: 0; }
+  .stop-icon-wrap { width: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+  .stop-body { flex: 1; padding: 12px 12px 12px 4px; min-width: 0; }
+  .stop-time { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--soft); font-weight: 500; margin-bottom: 2px; }
+  .stop-name { font-weight: 600; font-size: 0.9rem; color: var(--text); line-height: 1.2; }
+  .stop-desc { font-size: 0.75rem; color: var(--soft); margin-top: 3px; line-height: 1.4; }
+  .stop-actions { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; padding: 8px 12px 8px 4px; gap: 5px; flex-shrink: 0; }
+  .maps-btn { display: flex; align-items: center; gap: 4px; background: var(--sea); color: white; border: none; border-radius: 8px; padding: 5px 10px; font-size: 0.65rem; font-family: 'DM Sans', sans-serif; font-weight: 600; cursor: pointer; text-decoration: none; white-space: nowrap; }
+
+  .toddler-cue { background: linear-gradient(135deg, #fff9f0, #fff4e8); border-left: 3px solid var(--amber); border-radius: 0 0 10px 10px; padding: 8px 12px 8px 16px; font-size: 0.72rem; color: #8a6020; font-style: italic; display: flex; align-items: center; gap: 6px; }
+
+  .c-sea { background: var(--sea); }
+  .c-beach { background: var(--gold); }
+  .c-food { background: var(--terracotta); }
+  .c-hotel { background: var(--lavender); }
+  .c-activity { background: var(--olive); }
+  .c-travel { background: var(--slate); }
+  .c-rest { background: #a0aab4; }
+  .c-birthday { background: #c0649a; }
+
+  .trip-progress { padding: 10px 16px 0; }
+  .progress-track { height: 3px; background: #d8e4ea; border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--sea)); border-radius: 2px; }
+  .progress-label { font-size: 0.62rem; color: var(--soft); margin-top: 4px; text-align: right; }
+
+  .notes-card { margin: 0 16px; background: linear-gradient(135deg, #e4f2f8, #daeaf4); border-radius: 12px; padding: 12px 14px; border: 1px solid #c0dcea; }
+  .notes-title { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sea); font-weight: 600; margin-bottom: 6px; }
+  .notes-items { display: flex; flex-direction: column; gap: 4px; }
+  .notes-item { font-size: 0.73rem; color: var(--slate); display: flex; gap: 6px; line-height: 1.4; }
+  .notes-item::before { content: '·'; color: var(--sea); flex-shrink: 0; }
+
+  /* RESORT HIGHLIGHTS CARD */
+  .resort-card { margin: 12px 16px 0; background: white; border-radius: 14px; padding: 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+  .resort-card-title { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sea); font-weight: 600; margin-bottom: 10px; }
+  .resort-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .resort-chip { background: var(--sea-light); color: var(--sea); border-radius: 20px; padding: 4px 10px; font-size: 0.68rem; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>Aba's Birthday 🎂</h1>
+      <div class="subtitle">Sardinia · August 11–14</div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+  </div>
+</div>
+
+<div class="day-tabs" id="dayTabs"></div>
+<div class="content" id="content"></div>
+
+<script>
+const days = [
+  {
+    tab: "Aug 11", title: "Arrival — Sardinia", date: "August 11",
+    subtitle: "Flying in & first taste of the island", progress: 25,
+    hotel: { name: "Valle dell'Erica Resort Thalasso & SPA", icon: "🌊", note: "Santa Teresa Gallura, northern Sardinia · 5-star" },
+    showResort: true,
+    stops: [
+      { time: "Travel", name: "Fly to Sardinia", desc: "Flying into Olbia Costa Smeralda Airport (OLB) — the main gateway to northern Sardinia. About 2h from most European hubs.", icon: "✈️", type: "travel", maps: "Olbia Costa Smeralda Airport Sardinia" },
+      { time: "Transfer", name: "Drive to Santa Teresa Gallura", desc: "About 1 hour from Olbia airport to the resort. Scenic coastal drive through the Gallura region.", icon: "🚗", type: "travel", maps: "Santa Teresa Gallura Sardinia" },
+      { time: "Afternoon", name: "Check In — Valle dell'Erica", desc: "Settle into the resort. Take a breath. The Mediterranean is right outside.", icon: "🌊", type: "hotel", maps: "Valle dell'Erica Resort Santa Teresa Gallura" },
+      { time: "Late Afternoon", name: "First Beach Moment", desc: "The resort has direct beach access. Let her splash in the crystal clear water for the first time.", icon: "🏖️", type: "beach", cue: "Look at the water — it's so blue!" },
+      { time: "Evening", name: "Dinner at the Resort", desc: "Keep it easy on arrival night. The resort's cuisine focuses on fresh Sardinian ingredients.", icon: "🍽️", type: "food" },
+    ]
+  },
+  {
+    tab: "Aug 12", title: "Aba's Birthday! 🎂", date: "August 12",
+    subtitle: "Sun, sea & a celebration", progress: 50,
+    hotel: { name: "Valle dell'Erica Resort Thalasso & SPA", icon: "🌊" },
+    notes: ["This is the day — make it magical", "The resort can arrange birthday touches — worth asking at check-in"],
+    stops: [
+      { time: "Morning", name: "Beach Morning", desc: "The resort's private beaches on the Strait of Bonifacio are stunning. Turquoise water, white sand, and the island of Corsica on the horizon.", icon: "🏖️", type: "beach", cue: "Happy birthday Aba! Let's go to the beach!" },
+      { time: "Mid-Morning", name: "Thalasso Spa (for Aba!)", desc: "The resort's signature seawater spa — a perfect birthday treat while the little one plays at the kids' club.", icon: "💆", type: "activity", maps: "Valle dell'Erica Thalasso Spa" },
+      { time: "Kids' Club", name: "Mini Club for Her", desc: "The resort has a dedicated children's program. She can play, make friends, and have her own adventure.", icon: "🎨", type: "activity", cue: "Let's go see what the kids' club has today!" },
+      { time: "Lunch", name: "Lunch by the Sea", desc: "One of the resort's restaurants with a view. Fresh Sardinian fish, pasta, and the famous Sardinian flatbread — pane carasau.", icon: "🐟", type: "food" },
+      { time: "Afternoon", name: "Sailing or Boat Trip", desc: "The resort has its own fleet and offers boat excursions around the La Maddalena Archipelago. A birthday boat trip is a must.", icon: "⛵", type: "sea", maps: "La Maddalena Archipelago Sardinia", cue: "Let's go on a boat!" },
+      { time: "Evening", name: "Birthday Dinner 🎂", desc: "A special dinner to celebrate. Ask the resort about a private setup or their signature restaurant — this is the moment.", icon: "🥂", type: "birthday" },
+    ]
+  },
+  {
+    tab: "Aug 13", title: "Explore & Unwind", date: "August 13",
+    subtitle: "Beaches, villages & one last sunset", progress: 75,
+    hotel: { name: "Valle dell'Erica Resort Thalasso & SPA", icon: "🌊" },
+    stops: [
+      { time: "Morning", name: "La Maddalena Archipelago", desc: "A national park of 60+ islands with some of the most beautiful water in the Mediterranean. Take the resort's boat or a local ferry.", icon: "🏝️", type: "sea", maps: "La Maddalena Archipelago National Park", cue: "Let's explore the islands!" },
+      { time: "Midday", name: "Lunch in Santa Teresa Gallura", desc: "The charming hilltop town is steps from the resort. Great local restaurants and a lively market square.", icon: "🍋", type: "food", maps: "Santa Teresa Gallura town center" },
+      { time: "Afternoon", name: "Capo Testa", desc: "Dramatic granite rock formations and a lighthouse just 3km from the resort. Otherworldly scenery — perfect for photos.", icon: "🪨", type: "activity", maps: "Capo Testa Santa Teresa Gallura", cue: "Look at those big rocks!" },
+      { time: "Late Afternoon", name: "Final Beach Hour", desc: "One last long afternoon on the beach. Soak it in.", icon: "🌅", type: "beach" },
+      { time: "Evening", name: "Sunset Dinner", desc: "Northern Sardinia faces Corsica — the sunsets are extraordinary. Find a table with a view for the last evening.", icon: "🌇", type: "food" },
+    ]
+  },
+  {
+    tab: "Aug 14", title: "Homeward Bound", date: "August 14",
+    subtitle: "Back to Brooklyn with full hearts", progress: 100,
+    hotel: { name: "Valle dell'Erica Resort Thalasso & SPA", icon: "🌊" },
+    stops: [
+      { time: "Morning", name: "Last Breakfast at the Resort", desc: "Take your time. One final espresso by the sea. Pack up unhurriedly.", icon: "☕", type: "food" },
+      { time: "Late Morning", name: "Check Out", desc: "Say goodbye to Valle dell'Erica. Carry the blue water with you.", icon: "🌊", type: "hotel", maps: "Valle dell'Erica Resort Santa Teresa Gallura" },
+      { time: "Transfer", name: "Drive to Olbia Airport", desc: "About 1 hour back to OLB. The Sardinian granite hills and cork oak forests make for a beautiful farewell drive.", icon: "🚗", type: "travel", maps: "Olbia Costa Smeralda Airport" },
+      { time: "Flight", name: "Fly Home to Brooklyn", desc: "Homeward bound, tanned, rested, and full of memories. What a birthday.", icon: "✈️", type: "travel" },
+    ]
+  }
+];
+
+const typeColors = {
+  sea: 'c-sea', beach: 'c-beach', food: 'c-food', hotel: 'c-hotel',
+  activity: 'c-activity', travel: 'c-travel', rest: 'c-rest', birthday: 'c-birthday'
+};
+
+function makeGoogleMapsUrl(q) { return `https://maps.google.com/?q=${encodeURIComponent(q)}`; }
+
+function renderTabs() {
+  const el = document.getElementById('dayTabs');
+  days.forEach((day, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'day-tab' + (i === 0 ? ' active' : '');
+    btn.textContent = day.tab;
+    btn.onclick = () => switchDay(i);
+    el.appendChild(btn);
+  });
+}
+
+function renderContent() {
+  const el = document.getElementById('content');
+  days.forEach((day, i) => {
+    const panel = document.createElement('div');
+    panel.className = 'day-panel' + (i === 0 ? ' active' : '');
+
+    let html = `
+      <div class="day-hero">
+        <div class="day-label">${day.date}</div>
+        <div class="day-title">${day.title}</div>
+        <div class="day-subtitle">${day.subtitle}</div>
+      </div>
+      <div class="trip-progress">
+        <div class="progress-track"><div class="progress-fill" style="width:${day.progress}%"></div></div>
+        <div class="progress-label">Trip progress: ${day.progress}%</div>
+      </div>`;
+
+    if (day.hotel) {
+      html += `<div class="hotel-banner"><div class="hotel-banner-icon">${day.hotel.icon}</div><div>
+        <div class="hotel-banner-label">Staying at</div>
+        <div class="hotel-banner-name">${day.hotel.name}</div>
+        ${day.hotel.note ? `<div class="hotel-banner-note">${day.hotel.note}</div>` : ''}
+      </div></div>`;
+    }
+
+    if (day.showResort) {
+      html += `<div class="resort-card">
+        <div class="resort-card-title">🌊 Resort Highlights</div>
+        <div class="resort-chips">
+          <span class="resort-chip">Private beaches</span>
+          <span class="resort-chip">Thalasso & Spa</span>
+          <span class="resort-chip">Kids' Mini Club</span>
+          <span class="resort-chip">Sailing & boat trips</span>
+          <span class="resort-chip">Sardinian cuisine</span>
+          <span class="resort-chip">La Maddalena access</span>
+        </div>
+      </div>`;
+    }
+
+    html += `<div class="stops">`;
+
+    if (day.notes) {
+      html += `<div class="notes-card"><div class="notes-title">📋 Notes</div><div class="notes-items">`;
+      day.notes.forEach(n => { html += `<div class="notes-item">${n}</div>`; });
+      html += `</div></div>`;
+    }
+
+    day.stops.forEach(stop => {
+      const c = typeColors[stop.type] || 'c-activity';
+      html += `<div class="stop-card"><div class="stop-inner">
+        <div class="stop-accent ${c}"></div>
+        <div class="stop-icon-wrap">${stop.icon}</div>
+        <div class="stop-body">
+          <div class="stop-time">${stop.time}</div>
+          <div class="stop-name">${stop.name}</div>
+          <div class="stop-desc">${stop.desc}</div>
+        </div>
+        <div class="stop-actions">${stop.maps ? `<a href="${makeGoogleMapsUrl(stop.maps)}" target="_blank" class="maps-btn">🗺️ Maps</a>` : ''}</div>
+      </div>${stop.cue ? `<div class="toddler-cue">🧒 "${stop.cue}"</div>` : ''}</div>`;
+    });
+
+    html += `</div>`;
+    panel.innerHTML = html;
+    el.appendChild(panel);
+  });
+}
+
+function switchDay(i) {
+  document.querySelectorAll('.day-tab').forEach((t, j) => t.classList.toggle('active', i === j));
+  document.querySelectorAll('.day-panel').forEach((p, j) => p.classList.toggle('active', i === j));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+renderTabs();
+renderContent();
+</script>
+</body>
+</html>
