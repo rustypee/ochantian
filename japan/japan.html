@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Japan · Family Travel Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #f5f0e8;
+    --coral: #e07b5a;
+    --dusk: #5c4a6e;
+    --amber: #d4a843;
+    --slate: #3a4a5c;
+    --text: #1e2a35;
+    --soft: #7a8a9a;
+    --sakura: #c0647a;
+    --matcha: #5a7a5a;
+    --indigo: #3a4a7c;
+    --gold: #c8942a;
+    --bamboo: #6a8a5a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+  .header { background: var(--slate); color: white; padding: 18px 20px 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  .header-top { display: flex; align-items: center; justify-content: space-between; }
+  .header h1 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; }
+  .header .subtitle { font-size: 0.7rem; opacity: 0.6; font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+  .home-btn { display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.25); border-radius: 20px; padding: 6px 12px; font-size: 0.7rem; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; text-decoration: none; letter-spacing: 0.04em; flex-shrink: 0; }
+
+  .day-tabs { display: flex; gap: 6px; padding: 12px 16px; overflow-x: auto; background: white; border-bottom: 1px solid #e0e8ec; scrollbar-width: none; position: sticky; top: 62px; z-index: 99; }
+  .day-tabs::-webkit-scrollbar { display: none; }
+  .day-tab { flex-shrink: 0; padding: 6px 14px; border-radius: 20px; border: 1.5px solid #d0dce4; background: transparent; font-size: 0.72rem; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--soft); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .day-tab.active { background: var(--slate); color: white; border-color: var(--slate); }
+
+  .content { padding: 0 0 80px; }
+  .day-panel { display: none; }
+  .day-panel.active { display: block; }
+
+  .day-hero { padding: 20px 20px 16px; background: white; border-bottom: 1px solid #e8eef2; }
+  .day-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--soft); font-weight: 500; margin-bottom: 4px; }
+  .day-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--text); line-height: 1.25; }
+  .day-subtitle { font-size: 0.75rem; color: var(--soft); margin-top: 4px; font-style: italic; }
+
+  .hotel-banner { margin: 12px 16px 0; background: linear-gradient(135deg, #f8f4fc, #f2eef8); border-left: 3px solid var(--dusk); border-radius: 0 10px 10px 0; padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+  .hotel-banner-icon { font-size: 1.2rem; }
+  .hotel-banner-label { font-size: 0.68rem; color: var(--dusk); font-weight: 500; }
+  .hotel-banner-name { font-size: 0.82rem; color: var(--text); font-weight: 600; margin-top: 1px; }
+  .hotel-banner-note { font-size: 0.68rem; color: var(--soft); font-style: italic; margin-top: 1px; }
+
+  .stops { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .stop-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+  .stop-inner { display: flex; align-items: stretch; min-height: 68px; }
+  .stop-accent { width: 5px; flex-shrink: 0; }
+  .stop-icon-wrap { width: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+  .stop-body { flex: 1; padding: 12px 12px 12px 4px; min-width: 0; }
+  .stop-time { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--soft); font-weight: 500; margin-bottom: 2px; }
+  .stop-name { font-weight: 600; font-size: 0.9rem; color: var(--text); line-height: 1.2; }
+  .stop-desc { font-size: 0.75rem; color: var(--soft); margin-top: 3px; line-height: 1.4; }
+  .stop-actions { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; padding: 8px 12px 8px 4px; gap: 5px; flex-shrink: 0; }
+  .maps-btn { display: flex; align-items: center; gap: 4px; background: var(--indigo); color: white; border: none; border-radius: 8px; padding: 5px 10px; font-size: 0.65rem; font-family: 'DM Sans', sans-serif; font-weight: 600; cursor: pointer; text-decoration: none; white-space: nowrap; }
+
+  .toddler-cue { background: linear-gradient(135deg, #fff9f0, #fff4e8); border-left: 3px solid var(--amber); border-radius: 0 0 10px 10px; padding: 8px 12px 8px 16px; font-size: 0.72rem; color: #8a6020; font-style: italic; display: flex; align-items: center; gap: 6px; }
+
+  .c-temple { background: var(--sakura); }
+  .c-nature { background: var(--bamboo); }
+  .c-food { background: var(--coral); }
+  .c-hotel { background: var(--dusk); }
+  .c-activity { background: var(--gold); }
+  .c-travel { background: var(--indigo); }
+  .c-rest { background: #a0aab4; }
+
+  .trip-progress { padding: 10px 16px 0; }
+  .progress-track { height: 3px; background: #d8e4ea; border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--sakura), var(--indigo)); border-radius: 2px; }
+  .progress-label { font-size: 0.62rem; color: var(--soft); margin-top: 4px; text-align: right; }
+
+  .notes-card { margin: 0 16px; background: linear-gradient(135deg, #f4f0f8, #eeeaf4); border-radius: 12px; padding: 12px 14px; border: 1px solid #d8d0e8; }
+  .notes-title { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dusk); font-weight: 600; margin-bottom: 6px; }
+  .notes-items { display: flex; flex-direction: column; gap: 4px; }
+  .notes-item { font-size: 0.73rem; color: var(--slate); display: flex; gap: 6px; line-height: 1.4; }
+  .notes-item::before { content: '·'; color: var(--sakura); flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>Japan 🌸</h1>
+      <div class="subtitle">Kyoto · Osaka · Tokyo · July 2025</div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+  </div>
+</div>
+
+<div class="day-tabs" id="dayTabs"></div>
+<div class="content" id="content"></div>
+
+<script>
+const days = [
+  {
+    tab: "Jul 15", title: "Arrival — Kyoto", date: "July 15",
+    subtitle: "Gentle landing in Gion", progress: 14,
+    hotel: { name: "Four Seasons Kyoto", icon: "🏯" },
+    stops: [
+      { time: "Arrival", name: "Check In — Four Seasons Kyoto", desc: "Settle in and rest after the long journey.", icon: "🏯", type: "hotel", maps: "Four Seasons Kyoto" },
+      { time: "Evening", name: "Light Walk — Gion", desc: "Wander the historic geisha district. Quiet evening streets, lanterns, old wooden machiya.", icon: "🏮", type: "temple", maps: "Gion District Kyoto" },
+      { time: "Evening", name: "Yasaka Shrine", desc: "Beautiful and atmospheric at dusk. Easy stroll with a toddler.", icon: "⛩️", type: "temple", maps: "Yasaka Shrine Kyoto", cue: "Let's go see the big gate!" },
+      { time: "Dinner", name: "Easy Dinner", desc: "Keep it relaxed on arrival night. Hotel dining or something close by.", icon: "🍜", type: "food" },
+    ]
+  },
+  {
+    tab: "Jul 16", title: "Higashiyama", date: "July 16",
+    subtitle: "Temples, stone lanes & wagyu", progress: 28,
+    hotel: { name: "Four Seasons Kyoto", icon: "🏯" },
+    stops: [
+      { time: "Morning", name: "Kiyomizu-dera Temple", desc: "Kyoto's most iconic hillside temple. Stunning city views. Go early to beat the heat and crowds.", icon: "⛩️", type: "temple", maps: "Kiyomizudera Temple Kyoto", cue: "Let's climb up to the big temple!" },
+      { time: "Mid-Morning", name: "Sannenzaka & Ninenzaka", desc: "Beautifully preserved stone-paved lanes lined with tea shops and crafts. Perfect toddler-paced strolling.", icon: "🛤️", type: "activity", maps: "Sannenzaka Kyoto" },
+      { time: "Lunch", name: "Hafuu Honten", desc: "Famous wagyu beef sandwich. A Kyoto institution — worth every bite.", icon: "🥩", type: "food", maps: "Hafuu Honten Kyoto" },
+      { time: "Afternoon", name: "Rest & Nap", desc: "Return to the hotel. Let her rest before a special dinner.", icon: "💤", type: "rest" },
+      { time: "Dinner", name: "Kikunoi Roan", desc: "Celebrated kaiseki restaurant. One of Kyoto's finest — a beautiful, refined dinner.", icon: "🍱", type: "food", maps: "Kikunoi Roan Kyoto" },
+    ]
+  },
+  {
+    tab: "Jul 17", title: "Arashiyama", date: "July 17",
+    subtitle: "Bamboo, river & mountain monkeys", progress: 43,
+    hotel: { name: "Four Seasons Kyoto", icon: "🏯" },
+    stops: [
+      { time: "Morning", name: "Bamboo Grove", desc: "The iconic towering bamboo forest. Go early — magical before the crowds arrive.", icon: "🎋", type: "nature", maps: "Arashiyama Bamboo Grove Kyoto", cue: "Look how tall the bamboo is!" },
+      { time: "Mid-Morning", name: "Arashiyama River Walk", desc: "Stroll along the Oi River with mountain views. Flat and easy with a stroller.", icon: "🏔️", type: "nature", maps: "Arashiyama Kyoto" },
+      { time: "Optional", name: "Iwatayama Monkey Park", desc: "Hike up for Japanese macaques with panoramic views over Kyoto. A toddler highlight!", icon: "🐒", type: "activity", maps: "Iwatayama Monkey Park Kyoto", cue: "Let's go see the monkeys!" },
+      { time: "Lunch", name: "Shoraian or Yoshimura", desc: "Riverside soba in a stunning setting. Yoshimura has wonderful terrace views.", icon: "🍜", type: "food", maps: "Yoshimura Arashiyama Kyoto" },
+      { time: "Dinner", name: "Gion Duck Rice or Owariya", desc: "Owariya is one of Kyoto's oldest soba restaurants — a wonderful evening option.", icon: "🦆", type: "food", maps: "Owariya Kyoto" },
+    ]
+  },
+  {
+    tab: "Jul 18", title: "Fushimi Inari + Ryokan", date: "July 18",
+    subtitle: "Torii gates at dawn & a very special night", progress: 57,
+    hotel: { name: "Seikoro Ryokan", icon: "🎍", note: "Traditional ryokan — tatami, yukata & kaiseki" },
+    stops: [
+      { time: "Early Morning", name: "Fushimi Inari Taisha", desc: "Walk the thousands of vermillion torii gates before the heat rises. Even 20–30 min in is breathtaking.", icon: "⛩️", type: "temple", maps: "Fushimi Inari Taisha Kyoto", cue: "Let's walk through the orange gates!" },
+      { time: "Midday", name: "Light Lunch", desc: "Keep it easy before the big transition to the ryokan.", icon: "🍱", type: "food" },
+      { time: "Afternoon", name: "Check In — Seikoro Ryokan", desc: "One of Kyoto's most beloved traditional inns. Tatami rooms, yukata robes, extraordinary hospitality.", icon: "🎍", type: "hotel", maps: "Seikoro Ryokan Kyoto" },
+      { time: "Evening", name: "Kaiseki Dinner at Ryokan", desc: "A multi-course traditional Japanese dinner served in your room. Utterly unforgettable.", icon: "🍶", type: "food" },
+    ]
+  },
+  {
+    tab: "Jul 19", title: "Kyoto → Osaka", date: "July 19",
+    subtitle: "Travel day & relaxed arrival", progress: 71,
+    hotel: { name: "Patina Osaka", icon: "🏙️" },
+    stops: [
+      { time: "Morning", name: "Depart Kyoto by Train", desc: "Short and easy — about 15 min on the shinkansen or 30 min on the local Hankyu line.", icon: "🚅", type: "travel", maps: "Kyoto Station Japan", cue: "Let's ride the train to the next city!" },
+      { time: "Midday", name: "Check In — Patina Osaka", desc: "Settle in and decompress after the move.", icon: "🏙️", type: "hotel", maps: "Patina Osaka" },
+      { time: "Afternoon", name: "Easy Neighborhood Explore", desc: "Keep it gentle — wander, find a café, let her run. Save energy for Nara tomorrow.", icon: "🚶", type: "activity" },
+      { time: "Dinner", name: "Osaka Street Food", desc: "Osaka is Japan's food capital. Takoyaki (octopus balls) and okonomiyaki are toddler-approved street food adventures.", icon: "🐙", type: "food", maps: "Dotonbori Osaka" },
+    ]
+  },
+  {
+    tab: "Jul 20", title: "Nara Day Trip", date: "July 20",
+    subtitle: "Deer, a giant Buddha & forest paths", progress: 85,
+    hotel: { name: "Patina Osaka", icon: "🏙️" },
+    notes: ["About 45 min by train from Osaka — Kintetsu Nara line is easiest", "Buy deer crackers at the park entrance — she will absolutely love this"],
+    stops: [
+      { time: "Morning", name: "Train to Nara", desc: "Easy day trip on the Kintetsu Nara line from Osaka Namba.", icon: "🚃", type: "travel", maps: "Kintetsu Namba Station Osaka" },
+      { time: "Mid-Morning", name: "Nara Park — Feed the Deer", desc: "Hundreds of freely roaming sika deer. Deer crackers sold at the entrance. An absolute toddler highlight of the whole trip.", icon: "🦌", type: "activity", maps: "Nara Park Japan", cue: "Let's feed the deer!" },
+      { time: "Late Morning", name: "Todai-ji Temple", desc: "One of the world's largest wooden buildings, housing a colossal bronze Buddha. Genuinely awe-inspiring.", icon: "🏯", type: "temple", maps: "Todaiji Temple Nara", cue: "Let's go see the giant Buddha!" },
+      { time: "Lunch", name: "Lunch in Nara", desc: "Plenty of casual spots near the park. Keep it simple before the return journey.", icon: "🍱", type: "food", maps: "Nara Park area restaurants" },
+      { time: "Afternoon", name: "Return to Osaka", desc: "Head back to Patina for a well-earned rest and reset.", icon: "🚃", type: "travel", maps: "Kintetsu Nara Station" },
+      { time: "Evening", name: "Final Osaka Dinner", desc: "Last night in Osaka. Celebrate with something delicious.", icon: "🍜", type: "food", maps: "Shinsaibashi Osaka" },
+    ]
+  },
+  {
+    tab: "Jul 21", title: "Osaka → Tokyo", date: "July 21",
+    subtitle: "Bullet train to the capital", progress: 100,
+    hotel: { name: "Grand Hyatt Tokyo", icon: "🗼" },
+    stops: [
+      { time: "Morning", name: "Shinkansen to Tokyo", desc: "The bullet train is an experience in itself — about 2h30 on the Nozomi. She'll love watching Japan blur past the window.", icon: "🚅", type: "travel", maps: "Shin-Osaka Station", cue: "Let's ride the super fast train!" },
+      { time: "Midday", name: "Arrive Tokyo", desc: "Pull into Shinagawa or Tokyo Station. The city is waiting.", icon: "🗼", type: "travel", maps: "Tokyo Station Japan" },
+      { time: "Afternoon", name: "Check In — Grand Hyatt Tokyo", desc: "Settle into Roppongi Hills. Rest, reset, and take in the view.", icon: "🏨", type: "hotel", maps: "Grand Hyatt Tokyo Roppongi" },
+      { time: "Evening", name: "Tokyo Begins", desc: "Light explore of Roppongi Hills or a quiet dinner nearby. The adventure continues.", icon: "🌆", type: "activity", maps: "Roppongi Hills Tokyo" },
+    ]
+  }
+];
+
+const typeColors = { temple:'c-temple', nature:'c-nature', food:'c-food', hotel:'c-hotel', activity:'c-activity', travel:'c-travel', rest:'c-rest' };
+
+function makeGoogleMapsUrl(q) { return `https://maps.google.com/?q=${encodeURIComponent(q)}`; }
+
+function renderTabs() {
+  const el = document.getElementById('dayTabs');
+  days.forEach((day, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'day-tab' + (i === 0 ? ' active' : '');
+    btn.textContent = day.tab;
+    btn.onclick = () => switchDay(i);
+    el.appendChild(btn);
+  });
+}
+
+function renderContent() {
+  const el = document.getElementById('content');
+  days.forEach((day, i) => {
+    const panel = document.createElement('div');
+    panel.className = 'day-panel' + (i === 0 ? ' active' : '');
+    let html = `
+      <div class="day-hero">
+        <div class="day-label">${day.date}</div>
+        <div class="day-title">${day.title}</div>
+        <div class="day-subtitle">${day.subtitle}</div>
+      </div>
+      <div class="trip-progress">
+        <div class="progress-track"><div class="progress-fill" style="width:${day.progress}%"></div></div>
+        <div class="progress-label">Trip progress: ${day.progress}%</div>
+      </div>`;
+    if (day.hotel) {
+      html += `<div class="hotel-banner"><div class="hotel-banner-icon">${day.hotel.icon}</div><div>
+        <div class="hotel-banner-label">Staying at</div>
+        <div class="hotel-banner-name">${day.hotel.name}</div>
+        ${day.hotel.note ? `<div class="hotel-banner-note">${day.hotel.note}</div>` : ''}
+      </div></div>`;
+    }
+    html += `<div class="stops">`;
+    if (day.notes) {
+      html += `<div class="notes-card"><div class="notes-title">📋 Notes</div><div class="notes-items">`;
+      day.notes.forEach(n => { html += `<div class="notes-item">${n}</div>`; });
+      html += `</div></div>`;
+    }
+    day.stops.forEach(stop => {
+      const c = typeColors[stop.type] || 'c-activity';
+      html += `<div class="stop-card"><div class="stop-inner">
+        <div class="stop-accent ${c}"></div>
+        <div class="stop-icon-wrap">${stop.icon}</div>
+        <div class="stop-body">
+          <div class="stop-time">${stop.time}</div>
+          <div class="stop-name">${stop.name}</div>
+          <div class="stop-desc">${stop.desc}</div>
+        </div>
+        <div class="stop-actions">${stop.maps ? `<a href="${makeGoogleMapsUrl(stop.maps)}" target="_blank" class="maps-btn">🗺️ Maps</a>` : ''}</div>
+      </div>${stop.cue ? `<div class="toddler-cue">🧒 "${stop.cue}"</div>` : ''}</div>`;
+    });
+    html += `</div>`;
+    panel.innerHTML = html;
+    el.appendChild(panel);
+  });
+}
+
+function switchDay(i) {
+  document.querySelectorAll('.day-tab').forEach((t, j) => t.classList.toggle('active', i === j));
+  document.querySelectorAll('.day-panel').forEach((p, j) => p.classList.toggle('active', i === j));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+renderTabs();
+renderContent();
+</script>
+</body>
+</html>
