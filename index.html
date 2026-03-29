@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Family Travel Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #f5f0e8;
+    --ocean: #2a6b7c;
+    --seafoam: #4a9b8e;
+    --coral: #e07b5a;
+    --dusk: #5c4a6e;
+    --amber: #d4a843;
+    --slate: #3a4a5c;
+    --mist: #e8eef2;
+    --text: #1e2a35;
+    --soft: #7a8a9a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sand);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--slate);
+    color: white;
+    padding: 28px 24px 24px;
+    text-align: center;
+  }
+  .header-eyebrow {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.55;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .header-sub {
+    font-size: 0.78rem;
+    opacity: 0.6;
+    margin-top: 6px;
+    font-weight: 300;
+    font-style: italic;
+  }
+  .header-emoji {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  /* WAVE DIVIDER */
+  .wave {
+    background: var(--slate);
+    line-height: 0;
+  }
+  .wave svg {
+    display: block;
+    width: 100%;
+  }
+
+  /* GREETING */
+  .greeting {
+    padding: 24px 24px 8px;
+    text-align: center;
+  }
+  .greeting-text {
+    font-size: 0.82rem;
+    color: var(--soft);
+    line-height: 1.6;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  /* TRIP CARDS */
+  .trips {
+    padding: 16px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .trip-card {
+    border-radius: 18px;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: transform 0.18s, box-shadow 0.18s;
+    position: relative;
+  }
+  .trip-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  }
+
+  .trip-card-inner {
+    display: flex;
+    align-items: center;
+    padding: 20px 20px;
+    gap: 16px;
+    background: white;
+    min-height: 90px;
+  }
+
+  .trip-icon-wrap {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+
+  .trip-text { flex: 1; min-width: 0; }
+  .trip-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .trip-detail {
+    font-size: 0.72rem;
+    color: var(--soft);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+  .trip-status {
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-top: 5px;
+    display: inline-block;
+  }
+  .status-soon { background: #fff3e0; color: #d4780a; }
+  .status-planning { background: #e8f4f8; color: #2a6b7c; }
+  .status-upcoming { background: #f0f8f0; color: #3a7a3a; }
+
+  .trip-arrow {
+    font-size: 1rem;
+    color: var(--soft);
+    flex-shrink: 0;
+  }
+
+  /* LEFT ACCENT BAR */
+  .trip-card-inner::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+  }
+  .accent-coral::before { background: var(--coral); }
+  .accent-ocean::before { background: var(--ocean); }
+  .accent-dusk::before { background: var(--dusk); }
+  .accent-amber::before { background: var(--amber); }
+
+
+
+  /* SECTION LABEL */
+  .section-label {
+    padding: 8px 20px 4px;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--soft);
+    font-weight: 600;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 0 20px 32px;
+    font-size: 0.68rem;
+    color: var(--soft);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="header-emoji">✈️</span>
+  <div class="header-eyebrow">Our Family</div>
+  <h1>Travel Hub</h1>
+  <div class="header-sub">adventures, big & small</div>
+</div>
+
+<div class="wave">
+  <svg viewBox="0 0 375 30" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,20 C100,35 275,5 375,20 L375,0 L0,0 Z" fill="#3a4a5c"/>
+  </svg>
+</div>
+
+<div class="greeting">
+  <div class="greeting-text">Your family adventures, all in one place. Tap a trip to explore.</div>
+</div>
+
+<div class="section-label">Active Trip</div>
+<div class="trips">
+
+  <a href="/roadtrip" class="trip-card accent-coral">
+    <div class="trip-card-inner">
+      <div class="trip-icon-wrap" style="background:#fff3ee;">🦞</div>
+      <div class="trip-text">
+        <div class="trip-name">New England Road Trip</div>
+        <div class="trip-detail">Milan → Newport → Portsmouth → Portland → Boston → Brooklyn</div>
+        <div class="trip-status status-soon">April 5–12</div>
+      </div>
+      <div class="trip-arrow">›</div>
+    </div>
+  </a>
+
+</div>
+
+<div class="section-label">On the Horizon</div>
+<div class="trips" style="padding-top: 0;">
+
+  <a href="/japan" class="trip-card accent-ocean">
+    <div class="trip-card-inner">
+      <div class="trip-icon-wrap" style="background:#e8f4f8;">🗾</div>
+      <div class="trip-text">
+        <div class="trip-name">Japan</div>
+        <div class="trip-detail">Coming soon — tap to plan</div>
+        <div class="trip-status status-planning">Planning</div>
+      </div>
+      <div class="trip-arrow">›</div>
+    </div>
+  </a>
+
+  <a href="/italy" class="trip-card accent-dusk">
+    <div class="trip-card-inner">
+      <div class="trip-icon-wrap" style="background:#f4f0f8;">🇮🇹</div>
+      <div class="trip-text">
+        <div class="trip-name">Italy</div>
+        <div class="trip-detail">Coming soon — tap to plan</div>
+        <div class="trip-status status-planning">Planning</div>
+      </div>
+      <div class="trip-arrow">›</div>
+    </div>
+  </a>
+
+  <a href="/abas-birthday" class="trip-card accent-amber">
+    <div class="trip-card-inner">
+      <div class="trip-icon-wrap" style="background:#fffbf0;">🎂</div>
+      <div class="trip-text">
+        <div class="trip-name">Aba's Birthday</div>
+        <div class="trip-detail">Coming soon — tap to plan</div>
+        <div class="trip-status status-upcoming">Upcoming</div>
+      </div>
+      <div class="trip-arrow">›</div>
+    </div>
+  </a>
+
+</div>
+
+<div class="footer">Made with love for the first family road trip 🌊</div>
+
+</body>
+</html>
