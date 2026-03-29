@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Italy · Family Travel Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #f5f0e8;
+    --coral: #e07b5a;
+    --amber: #d4a843;
+    --slate: #3a4a5c;
+    --text: #1e2a35;
+    --soft: #7a8a9a;
+    --terracotta: #c4614a;
+    --olive: #6a7a3a;
+    --gold: #c8942a;
+    --sicily: #2a5a8c;
+    --sicily-light: #e4eef8;
+    --baroque: #8c5a2a;
+    --sea: #1a7a8c;
+    --wedding: #8c3a6a;
+    --wedding-light: #f8e8f2;
+    --shabbat: #4a6a2a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--sand); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+  .header { background: var(--slate); color: white; padding: 18px 20px 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  .header-top { display: flex; align-items: center; justify-content: space-between; }
+  .header h1 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; }
+  .header .subtitle { font-size: 0.7rem; opacity: 0.6; font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+  .home-btn { display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.25); border-radius: 20px; padding: 6px 12px; font-size: 0.7rem; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; text-decoration: none; letter-spacing: 0.04em; flex-shrink: 0; }
+
+  .day-tabs { display: flex; gap: 6px; padding: 12px 16px; overflow-x: auto; background: white; border-bottom: 1px solid #e0e8ec; scrollbar-width: none; position: sticky; top: 62px; z-index: 99; }
+  .day-tabs::-webkit-scrollbar { display: none; }
+  .day-tab { flex-shrink: 0; padding: 6px 14px; border-radius: 20px; border: 1.5px solid #d0dce4; background: transparent; font-size: 0.72rem; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--soft); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .day-tab.active { background: var(--slate); color: white; border-color: var(--slate); }
+  .day-tab.wedding-tab { border-color: var(--wedding); color: var(--wedding); }
+  .day-tab.wedding-tab.active { background: var(--wedding); color: white; border-color: var(--wedding); }
+
+  .content { padding: 0 0 80px; }
+  .day-panel { display: none; }
+  .day-panel.active { display: block; }
+
+  .day-hero { padding: 20px 20px 16px; background: white; border-bottom: 1px solid #e8eef2; }
+  .day-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--soft); font-weight: 500; margin-bottom: 4px; }
+  .day-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--text); line-height: 1.25; }
+  .day-subtitle { font-size: 0.75rem; color: var(--soft); margin-top: 4px; font-style: italic; }
+
+  .hotel-banner { margin: 12px 16px 0; background: linear-gradient(135deg, #f4f0e8, #eee8dc); border-left: 3px solid var(--baroque); border-radius: 0 10px 10px 0; padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+  .hotel-banner-icon { font-size: 1.2rem; }
+  .hotel-banner-label { font-size: 0.68rem; color: var(--baroque); font-weight: 500; }
+  .hotel-banner-name { font-size: 0.82rem; color: var(--text); font-weight: 600; margin-top: 1px; }
+  .hotel-banner-note { font-size: 0.68rem; color: var(--soft); font-style: italic; margin-top: 1px; }
+
+  /* WEDDING EVENT BANNER */
+  .event-banner { margin: 12px 16px 0; border-radius: 12px; padding: 14px 16px; }
+  .event-banner.shabbat { background: linear-gradient(135deg, #eef4e8, #e4eede); border-left: 4px solid var(--shabbat); }
+  .event-banner.wedding { background: linear-gradient(135deg, #f8eaf4, #f0e0ec); border-left: 4px solid var(--wedding); }
+  .event-banner.beach { background: linear-gradient(135deg, #e4eef8, #d8e8f4); border-left: 4px solid var(--sea); }
+  .event-banner.party { background: linear-gradient(135deg, #f4f0f8, #ece4f4); border-left: 4px solid #7a4a9a; }
+  .event-banner-eyebrow { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 4px; }
+  .shabbat .event-banner-eyebrow { color: var(--shabbat); }
+  .wedding .event-banner-eyebrow { color: var(--wedding); }
+  .beach .event-banner-eyebrow { color: var(--sea); }
+  .party .event-banner-eyebrow { color: #7a4a9a; }
+  .event-banner-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+  .event-banner-detail { font-size: 0.72rem; color: var(--soft); line-height: 1.5; }
+  .event-banner-dresscode { font-size: 0.68rem; font-style: italic; margin-top: 5px; color: var(--text); opacity: 0.75; }
+
+  .stops { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .stop-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+  .stop-inner { display: flex; align-items: stretch; min-height: 68px; }
+  .stop-accent { width: 5px; flex-shrink: 0; }
+  .stop-icon-wrap { width: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+  .stop-body { flex: 1; padding: 12px 12px 12px 4px; min-width: 0; }
+  .stop-time { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--soft); font-weight: 500; margin-bottom: 2px; }
+  .stop-name { font-weight: 600; font-size: 0.9rem; color: var(--text); line-height: 1.2; }
+  .stop-desc { font-size: 0.75rem; color: var(--soft); margin-top: 3px; line-height: 1.4; }
+  .stop-actions { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; padding: 8px 12px 8px 4px; gap: 5px; flex-shrink: 0; }
+  .maps-btn { display: flex; align-items: center; gap: 4px; background: var(--sicily); color: white; border: none; border-radius: 8px; padding: 5px 10px; font-size: 0.65rem; font-family: 'DM Sans', sans-serif; font-weight: 600; cursor: pointer; text-decoration: none; white-space: nowrap; }
+
+  .toddler-cue { background: linear-gradient(135deg, #fff9f0, #fff4e8); border-left: 3px solid var(--amber); border-radius: 0 0 10px 10px; padding: 8px 12px 8px 16px; font-size: 0.72rem; color: #8a6020; font-style: italic; display: flex; align-items: center; gap: 6px; }
+
+  .c-travel { background: var(--slate); }
+  .c-explore { background: var(--sicily); }
+  .c-food { background: var(--terracotta); }
+  .c-hotel { background: var(--baroque); }
+  .c-beach { background: var(--sea); }
+  .c-wedding { background: var(--wedding); }
+  .c-shabbat { background: var(--shabbat); }
+  .c-nature { background: var(--olive); }
+  .c-party { background: #7a4a9a; }
+  .c-rest { background: #a0aab4; }
+
+  .trip-progress { padding: 10px 16px 0; }
+  .progress-track { height: 3px; background: #d8e4ea; border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--terracotta), var(--wedding)); border-radius: 2px; }
+  .progress-label { font-size: 0.62rem; color: var(--soft); margin-top: 4px; text-align: right; }
+
+  .notes-card { margin: 0 16px; background: linear-gradient(135deg, #f4f0e8, #eee8dc); border-radius: 12px; padding: 12px 14px; border: 1px solid #ddd0c0; }
+  .notes-title { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--baroque); font-weight: 600; margin-bottom: 6px; }
+  .notes-items { display: flex; flex-direction: column; gap: 4px; }
+  .notes-item { font-size: 0.73rem; color: var(--slate); display: flex; gap: 6px; line-height: 1.4; }
+  .notes-item::before { content: '·'; color: var(--terracotta); flex-shrink: 0; }
+
+  .section-divider { margin: 4px 16px 0; padding: 8px 0 4px; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--soft); font-weight: 600; border-top: 1px solid #e8e0d8; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>Italy 🇮🇹</h1>
+      <div class="subtitle">Ortigia · Taormina · August 2026</div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+  </div>
+</div>
+
+<div class="day-tabs" id="dayTabs"></div>
+<div class="content" id="content"></div>
+
+<script>
+const days = [
+  {
+    tab: "Aug 3", title: "Arrival — Ortigia", date: "August 3",
+    subtitle: "Landing in ancient Syracuse", progress: 11,
+    hotel: { name: "Algilà Ortigia Charme Hotel", icon: "🏛️", note: "Ortigia island, Syracuse · Seafront boutique hotel" },
+    stops: [
+      { time: "Travel", name: "Fly to Catania", desc: "Catania Fontanarossa (CTA) is the closest airport — about 1 hour from Ortigia. Alternatively, Palermo connects with a longer scenic drive.", icon: "✈️", type: "travel", maps: "Catania Fontanarossa Airport" },
+      { time: "Transfer", name: "Drive to Ortigia, Syracuse", desc: "About 1 hour from Catania. Ortigia is a small island connected by bridges — the hotel will advise on parking as cars are restricted inside.", icon: "🚗", type: "travel", maps: "Ortigia Syracuse Sicily" },
+      { time: "Afternoon", name: "Check In — Algilà Ortigia", desc: "Settle into your antique-furnished room. Some have rooftop terraces with Ionian Sea views and jacuzzis — worth requesting at booking.", icon: "🏛️", type: "hotel", maps: "Algilà Ortigia Charme Hotel Syracuse" },
+      { time: "Late Afternoon", name: "First Ortigia Wander", desc: "Step outside and get lost. The winding Baroque lanes are beautiful and completely walkable. The Piazza del Duomo is five minutes away.", icon: "🚶", type: "explore", maps: "Piazza del Duomo Ortigia Syracuse", cue: "Let's explore the old city!" },
+      { time: "Evening", name: "Aperitivo by the Water", desc: "Ortigia's seafront promenade is made for a Campari Spritz at sunset. Find a table facing the Ionian Sea.", icon: "🍊", type: "food", maps: "Lungomare Ortigia Syracuse" },
+      { time: "Dinner", name: "Dinner in Ortigia", desc: "The island has exceptional seafood restaurants. Try Don Camillo or Ristorante Porta Marina for fresh Sicilian fish.", icon: "🐟", type: "food", maps: "Don Camillo Restaurant Ortigia Syracuse" },
+    ]
+  },
+  {
+    tab: "Aug 4", title: "Ortigia & Syracuse", date: "August 4",
+    subtitle: "Greek temples, Baroque piazzas & granita", progress: 22,
+    hotel: { name: "Algilà Ortigia Charme Hotel", icon: "🏛️" },
+    notes: ["Bike rental is free at the hotel — great for exploring with a toddler seat", "The morning fish market at Ortigia is one of the best in Sicily — go early"],
+    stops: [
+      { time: "Early Morning", name: "Ortigia Fish Market", desc: "One of the most vibrant markets in Sicily. Swordfish, sea urchins, and vendors in full voice. Incredible sensory experience for a curious toddler.", icon: "🐠", type: "explore", maps: "Mercato di Ortigia Syracuse", cue: "Look at all the fish!" },
+      { time: "Morning", name: "Cathedral of Syracuse", desc: "A Greek Doric temple converted into a Baroque cathedral — you can literally see the ancient columns embedded in the walls. Astonishing.", icon: "⛪", type: "explore", maps: "Cathedral of Syracuse Ortigia" },
+      { time: "Morning", name: "Fonte Aretusa", desc: "A freshwater spring on the seafront, filled with papyrus plants and ducks. She will love the ducks.", icon: "🦆", type: "explore", maps: "Fonte Aretusa Ortigia Syracuse", cue: "Let's go see the ducks!" },
+      { time: "Lunch", name: "Granita & Brioche", desc: "The Sicilian breakfast-lunch institution. Almond or mulberry granita with a warm brioche bun. Non-negotiable.", icon: "🧊", type: "food", maps: "Bar San Rocco Ortigia Syracuse" },
+      { time: "Afternoon", name: "Nap & Hotel Time", desc: "The August heat is fierce. Retreat to the hotel for the hottest hours — the rooftop terrace is perfect.", icon: "💤", type: "rest" },
+      { time: "Late Afternoon", name: "Castello Maniace", desc: "The medieval castle at the southern tip of Ortigia. Breezy, beautiful views, and easy to walk around.", icon: "🏰", type: "explore", maps: "Castello Maniace Ortigia Syracuse", cue: "Let's go see the castle!" },
+      { time: "Dinner", name: "Osteria da Mariano", desc: "A beloved Ortigia institution. Simple, authentic Sicilian food — pasta con le sarde, grilled swordfish, and local wine.", icon: "🍝", type: "food", maps: "Osteria da Mariano Ortigia Syracuse" },
+    ]
+  },
+  {
+    tab: "Aug 5", title: "Ortigia → Taormina", date: "August 5",
+    subtitle: "Drive up the coast to the wedding town", progress: 33,
+    hotel: { name: "Villa Britannia, Taormina", icon: "🌺", note: "Taormina · August 5–11" },
+    notes: ["About 2 hours drive from Ortigia to Taormina via the A18 coastal motorway", "The drive past Mount Etna is spectacular — she'll love the big volcano"],
+    stops: [
+      { time: "Morning", name: "Final Ortigia Morning", desc: "Slow breakfast at the hotel, one last espresso, a quick wander. Say goodbye to this magical island.", icon: "☕", type: "food" },
+      { time: "Late Morning", name: "Check Out & Drive North", desc: "About 2 hours to Taormina. Take the coastal A18 — Etna on your left, Ionian Sea on your right the whole way.", icon: "🚗", type: "travel", maps: "Taormina Sicily", cue: "Look — that's a volcano!" },
+      { time: "Afternoon", name: "Check In — Villa Britannia", desc: "Settle into your Taormina base for the week. Most of the wedding celebrations will be walking distance or a short drive.", icon: "🌺", type: "hotel", maps: "Villa Britannia Taormina" },
+      { time: "Late Afternoon", name: "First Look at Taormina", desc: "Walk up the Corso Umberto — the main pedestrian street. Views of Etna and the bay from every terrace.", icon: "🚶", type: "explore", maps: "Corso Umberto Taormina", cue: "Look how far we can see!" },
+      { time: "Dinner", name: "Dinner in Taormina", desc: "Get your bearings. Al Duomo or Osteria Nero d'Avola are lovely first-night options.", icon: "🍋", type: "food", maps: "Al Duomo Restaurant Taormina" },
+    ]
+  },
+  {
+    tab: "Aug 6", title: "Taormina", date: "August 6",
+    subtitle: "Teatro Greco, beaches & rest ahead of Shabbat",
+    progress: 44,
+    hotel: { name: "Villa Britannia, Taormina", icon: "🌺" },
+    stops: [
+      { time: "Morning", name: "Teatro Greco di Taormina", desc: "The ancient Greek theatre with Mount Etna as its backdrop. One of the most beautiful sights in Sicily. Best early before the heat.", icon: "🏛️", type: "explore", maps: "Teatro Greco Taormina", cue: "This is a really really old theatre!" },
+      { time: "Mid-Morning", name: "Corso Umberto Stroll", desc: "Browse the main street — ceramic shops, cannolo stops, and views down to the bay at every turn.", icon: "🛍️", type: "explore", maps: "Corso Umberto Taormina" },
+      { time: "Lunch", name: "Lunch with a View", desc: "Find a terrace restaurant overlooking the bay. The Sicilian pasta here — pasta alla norma — is outstanding.", icon: "🍝", type: "food", maps: "Ristorante La Piazzetta Taormina" },
+      { time: "Afternoon", name: "Isola Bella Beach", desc: "The jewel of Taormina. A tiny island connected by a sliver of sand, crystal clear water, and a nature reserve. Cable car from town.", icon: "🏖️", type: "beach", maps: "Isola Bella Taormina", cue: "Let's go to the little island beach!" },
+      { time: "Evening", name: "Rest & Get Ready", desc: "Early evening in — Shabbat dinner is tomorrow. Enjoy the Villa and a quiet night.", icon: "💤", type: "rest" },
+    ]
+  },
+  {
+    tab: "Aug 7", title: "Shabbat Dinner", date: "August 7",
+    subtitle: "A meaningful evening with friends & family",
+    progress: 55,
+    hotel: { name: "Villa Britannia, Taormina", icon: "🌺" },
+    event: {
+      type: "shabbat",
+      title: "Welcome Shabbat Dinner",
+      time: "8:00 PM – 10:00 PM",
+      desc: "A meaningful evening for friends and family to gather, share a beautiful dinner, and welcome Shabbat together in a warm and relaxed atmosphere. Location TBC.",
+      dresscode: "👗 Light, elegant summer attire in breathable fabrics"
+    },
+    stops: [
+      { time: "Morning", name: "Relaxed Morning", desc: "Keep the day easy. A slow breakfast, a short walk, a café stop.", icon: "☕", type: "food" },
+      { time: "Afternoon", name: "Giardini Naxos Beach", desc: "The long sandy beach below Taormina. Easier for toddlers than the rocky Isola Bella — flat, shallow water, and loungers.", icon: "🏖️", type: "beach", maps: "Giardini Naxos Beach Sicily", cue: "Let's splash in the sea!" },
+      { time: "Late Afternoon", name: "Rest & Get Dressed", desc: "Home to the villa. Get her down for a nap. Get dressed for the evening.", icon: "💤", type: "rest" },
+      { time: "8:00 PM", name: "Welcome Shabbat Dinner", desc: "A beautiful evening with friends and family. Location to be confirmed by the couple.", icon: "🕯️", type: "shabbat", maps: "Taormina Sicily" },
+      { time: "11:00 PM", name: "Boogie Round #1 (Optional)", desc: "The couple takes over a boutique club in Taormina for a private late-night celebration. Go if you have the energy — whatever you fancy!", icon: "🎵", type: "party" },
+    ]
+  },
+  {
+    tab: "Aug 8", title: "Beach Day", date: "August 8",
+    subtitle: "Private beach club · sun, swimming & easy lounging",
+    progress: 66,
+    hotel: { name: "Villa Britannia, Taormina", icon: "🌺" },
+    event: {
+      type: "beach",
+      title: "Afternoon Beach Hangs",
+      time: "2:00 PM – 7:00 PM",
+      desc: "A private beach club afternoon of sun, swimming, and easy lounging, with light bites and music into sunset. Location TBC.",
+      dresscode: "👙 Beachy"
+    },
+    notes: ["Wedding day is tomorrow — early night tonight if possible", "Transportation to the wedding venue will be arranged by the couple"],
+    stops: [
+      { time: "Morning", name: "Slow Morning at the Villa", desc: "Rest up. Let her play. Breakfast in the garden. Today is all about conserving energy for the big days.", icon: "🌺", type: "rest" },
+      { time: "2:00 PM", name: "Private Beach Club", desc: "Join the wedding group for a private beach afternoon. Light bites, music, swimming, and sunset. Location TBC by the couple.", icon: "🏖️", type: "beach" },
+      { time: "Evening", name: "Early Dinner & Rest", desc: "Get home at a reasonable hour. Tomorrow is the wedding — an early night is a gift to yourselves.", icon: "🌙", type: "rest" },
+    ]
+  },
+  {
+    tab: "Aug 9", title: "The Wedding! 💍", date: "August 9",
+    subtitle: "Yossi & Alice · Castello Xirumi",
+    progress: 77,
+    hotel: { name: "Villa Britannia, Taormina", icon: "🌺" },
+    event: {
+      type: "wedding",
+      title: "Ceremony & Reception — Yossi & Alice",
+      time: "5:00 PM – 4:00 AM",
+      desc: "Castello Xirumi, Serravalle, Lentini. A traditional aperitivo, followed by the ceremony, dinner under the Sicilian sky, and dancing late into the night. About 1h20 from Taormina — transportation arranged by the couple.",
+      dresscode: "👗 Elegant summer — linen, silk, flowy dresses, light tailoring. Bring dancing shoes!"
+    },
+    notes: ["Transportation to Castello Xirumi will be arranged — details shared closer to the date", "About 1h20 from Taormina to Lentini", "Plan for a babysitter at the villa for the little one for the evening"],
+    stops: [
+      { time: "Morning", name: "Relaxed Morning", desc: "Slow start. A good breakfast. A short walk if you feel like it. Today you're saving everything for tonight.", icon: "☕", type: "food" },
+      { time: "Afternoon", name: "Get Ready", desc: "Take your time getting dressed. It's a big, beautiful night.", icon: "💄", type: "rest" },
+      { time: "5:00 PM", name: "Depart for Castello Xirumi", desc: "Board the arranged transport to Lentini. About 1h20. The castle awaits.", icon: "🚌", type: "travel", maps: "Castello Xirumi Serravalle Lentini Sicily" },
+      { time: "5:00 PM", name: "Aperitivo", desc: "Welcome drinks and the start of the celebration at the historic castle.", icon: "🥂", type: "food" },
+      { time: "Ceremony", name: "The Wedding Ceremony", desc: "Yossi & Alice get married. Bring tissues.", icon: "💍", type: "wedding" },
+      { time: "Dinner", name: "Dinner Under the Sicilian Sky", desc: "A feast in the castello grounds. Sicilian summer night, great food, wonderful people.", icon: "🌟", type: "food" },
+      { time: "Late Night", name: "Dancing Until 4 AM", desc: "Put on your dancing shoes. This one goes all night.", icon: "💃", type: "party" },
+    ]
+  },
+  {
+    tab: "Aug 10", title: "Recovery Day", date: "August 10",
+    subtitle: "Slow, sunny & well-deserved rest",
+    progress: 88,
+    hotel: { name: "Villa Britannia, Taormina", icon: "🌺" },
+    stops: [
+      { time: "Morning", name: "Slow Start", desc: "No plans, no pressure. Sleep in as long as she'll let you. Breakfast at the villa.", icon: "☀️", type: "rest" },
+      { time: "Late Morning", name: "Isola Bella or Hotel Pool", desc: "A gentle return to the sea. Cable car down to Isola Bella or stay close to the villa if energy is low.", icon: "🏖️", type: "beach", maps: "Isola Bella Taormina" },
+      { time: "Lunch", name: "Casual Lunch in Town", desc: "Something simple. Arancini, a Sicilian slice, or a long lazy tavola.", icon: "🍊", type: "food", maps: "Taormina town center" },
+      { time: "Afternoon", name: "Nap & Villa Time", desc: "The best afternoon plan. Rest, sun, and letting the week sink in.", icon: "💤", type: "rest" },
+      { time: "Evening", name: "Farewell Dinner in Taormina", desc: "Last night in Taormina. Make it a good one — Osteria Nero d'Avola or back to a favourite from the week.", icon: "🌅", type: "food", maps: "Osteria Nero d'Avola Taormina" },
+    ]
+  },
+  {
+    tab: "Aug 11", title: "Fly to Sardinia", date: "August 11",
+    subtitle: "Taormina → Sardinia for Aba's Birthday",
+    progress: 100,
+    hotel: { name: "Valle dell'Erica Resort, Sardinia", icon: "🌊", note: "Next stop: Aba's Birthday!" },
+    stops: [
+      { time: "Morning", name: "Last Breakfast in Taormina", desc: "One final granita and brioche. Take it slow.", icon: "☕", type: "food" },
+      { time: "Late Morning", name: "Check Out — Villa Britannia", desc: "Pack up, say goodbye to Taormina. What a week.", icon: "🌺", type: "hotel", maps: "Villa Britannia Taormina" },
+      { time: "Transfer", name: "Drive to Catania Airport", desc: "About 1 hour from Taormina to CTA. Easy coastal drive.", icon: "🚗", type: "travel", maps: "Catania Fontanarossa Airport" },
+      { time: "Flight", name: "Fly to Sardinia", desc: "On to the next adventure — Valle dell'Erica awaits. Aba's birthday begins!", icon: "✈️", type: "travel" },
+    ]
+  }
+];
+
+const typeColors = {
+  travel: 'c-travel', explore: 'c-explore', food: 'c-food', hotel: 'c-hotel',
+  beach: 'c-beach', wedding: 'c-wedding', shabbat: 'c-shabbat', nature: 'c-nature',
+  party: 'c-party', rest: 'c-rest'
+};
+
+function makeGoogleMapsUrl(q) { return `https://maps.google.com/?q=${encodeURIComponent(q)}`; }
+
+function renderTabs() {
+  const el = document.getElementById('dayTabs');
+  days.forEach((day, i) => {
+    const btn = document.createElement('button');
+    const isWedding = day.tab === 'Aug 9';
+    btn.className = 'day-tab' + (i === 0 ? ' active' : '') + (isWedding ? ' wedding-tab' : '');
+    btn.textContent = day.tab;
+    btn.onclick = () => switchDay(i);
+    el.appendChild(btn);
+  });
+}
+
+function renderContent() {
+  const el = document.getElementById('content');
+  days.forEach((day, i) => {
+    const panel = document.createElement('div');
+    panel.className = 'day-panel' + (i === 0 ? ' active' : '');
+
+    let html = `
+      <div class="day-hero">
+        <div class="day-label">${day.date}</div>
+        <div class="day-title">${day.title}</div>
+        <div class="day-subtitle">${day.subtitle}</div>
+      </div>
+      <div class="trip-progress">
+        <div class="progress-track"><div class="progress-fill" style="width:${day.progress}%"></div></div>
+        <div class="progress-label">Trip progress: ${day.progress}%</div>
+      </div>`;
+
+    if (day.hotel) {
+      html += `<div class="hotel-banner"><div class="hotel-banner-icon">${day.hotel.icon}</div><div>
+        <div class="hotel-banner-label">Staying at</div>
+        <div class="hotel-banner-name">${day.hotel.name}</div>
+        ${day.hotel.note ? `<div class="hotel-banner-note">${day.hotel.note}</div>` : ''}
+      </div></div>`;
+    }
+
+    if (day.event) {
+      html += `<div class="event-banner ${day.event.type}">
+        <div class="event-banner-eyebrow">${day.event.type === 'wedding' ? '💍 Wedding Day' : day.event.type === 'shabbat' ? '🕯️ Wedding Weekend' : day.event.type === 'beach' ? '🏖️ Wedding Weekend' : '🎉 Event'}</div>
+        <div class="event-banner-title">${day.event.title}</div>
+        <div class="event-banner-detail">${day.event.time} · ${day.event.desc}</div>
+        <div class="event-banner-dresscode">${day.event.dresscode}</div>
+      </div>`;
+    }
+
+    html += `<div class="stops">`;
+
+    if (day.notes) {
+      html += `<div class="notes-card"><div class="notes-title">📋 Notes</div><div class="notes-items">`;
+      day.notes.forEach(n => { html += `<div class="notes-item">${n}</div>`; });
+      html += `</div></div>`;
+    }
+
+    day.stops.forEach(stop => {
+      const c = typeColors[stop.type] || 'c-explore';
+      html += `<div class="stop-card"><div class="stop-inner">
+        <div class="stop-accent ${c}"></div>
+        <div class="stop-icon-wrap">${stop.icon}</div>
+        <div class="stop-body">
+          <div class="stop-time">${stop.time}</div>
+          <div class="stop-name">${stop.name}</div>
+          <div class="stop-desc">${stop.desc}</div>
+        </div>
+        <div class="stop-actions">${stop.maps ? `<a href="${makeGoogleMapsUrl(stop.maps)}" target="_blank" class="maps-btn">🗺️ Maps</a>` : ''}</div>
+      </div>${stop.cue ? `<div class="toddler-cue">🧒 "${stop.cue}"</div>` : ''}</div>`;
+    });
+
+    html += `</div>`;
+    panel.innerHTML = html;
+    el.appendChild(panel);
+  });
+}
+
+function switchDay(i) {
+  document.querySelectorAll('.day-tab').forEach((t, j) => t.classList.toggle('active', i === j));
+  document.querySelectorAll('.day-panel').forEach((p, j) => p.classList.toggle('active', i === j));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+renderTabs();
+renderContent();
+</script>
+</body>
+</html>
