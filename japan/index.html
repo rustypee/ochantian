@@ -89,7 +89,7 @@
   <div class="header-top">
     <div>
       <h1>Japan 🌸</h1>
-      <div class="subtitle">Kyoto · Osaka · Tokyo · July 2025</div>
+      <div class="subtitle">Kyoto · Osaka · Tokyo · July 2026</div>
     </div>
     <a href="/" class="home-btn">🏠 Home</a>
   </div>
@@ -101,11 +101,19 @@
 <script>
 const days = [
   {
+    tab: "Jul 13", title: "Depart NYC — Tokyo", date: "July 13",
+    subtitle: "JFK → Tokyo Haneda · The adventure begins", progress: 0,
+    stops: [
+      { time: "13:35", name: "Japan Airlines JL0005 · JFK → HND", desc: "Departs JFK Terminal 8 · Arrives Tokyo Haneda Terminal 3 on Jul 14 at 16:40 · Flight time ~14h · Ticket: 1312144800620 · Reservation: EO84Z8 · Priority boarding · 3 checked bags.", icon: "✈️", type: "travel", maps: "JFK Terminal 8" },
+      { time: "Note", name: "Check in 60 min before departure", desc: "JAL recommends check-in completed 60 minutes before departure. Terminal 8 at JFK.", icon: "⏰", type: "rest" },
+    ]
+  },
+  {
     tab: "Jul 15", title: "Arrival — Kyoto", date: "July 15",
     subtitle: "Gentle landing in Gion", progress: 14,
     hotel: { name: "Four Seasons Kyoto", icon: "🏯" },
     stops: [
-      { time: "Arrival", name: "Check In — Four Seasons Kyoto", desc: "Settle in and rest after the long journey.", icon: "🏯", type: "hotel", maps: "Four Seasons Kyoto" },
+      { time: "Arrival", name: "Check In — Four Seasons Kyoto", desc: "Settle in and rest after the long journey. Premier Suite, 1 Bedroom (Heritage Garden) · Conf: ZO-AX1032-79874", icon: "🏯", type: "hotel", maps: "Four Seasons Kyoto" },
       { time: "Evening", name: "Light Walk — Gion", desc: "Wander the historic geisha district. Quiet evening streets, lanterns, old wooden machiya.", icon: "🏮", type: "temple", maps: "Gion District Kyoto" },
       { time: "Evening", name: "Yasaka Shrine", desc: "Beautiful and atmospheric at dusk. Easy stroll with a toddler.", icon: "⛩️", type: "temple", maps: "Yasaka Shrine Kyoto", cue: "Let's go see the big gate!" },
       { time: "Dinner", name: "Easy Dinner", desc: "Keep it relaxed on arrival night. Hotel dining or something close by.", icon: "🍜", type: "food" },
@@ -152,7 +160,7 @@ const days = [
     hotel: { name: "Patina Osaka", icon: "🏙️" },
     stops: [
       { time: "Morning", name: "Depart Kyoto by Train", desc: "Short and easy — about 15 min on the shinkansen or 30 min on the local Hankyu line.", icon: "🚅", type: "travel", maps: "Kyoto Station Japan", cue: "Let's ride the train to the next city!" },
-      { time: "Midday", name: "Check In — Patina Osaka", desc: "Settle in and decompress after the move.", icon: "🏙️", type: "hotel", maps: "Patina Osaka" },
+      { time: "Midday", name: "Check In — Patina Osaka", desc: "Settle in and decompress. Deluxe Suite, 1 King Bed (Osaka Castle View) · Conf: ZO-AX1032-81063", icon: "🏙️", type: "hotel", maps: "Patina Osaka" },
       { time: "Afternoon", name: "Easy Neighborhood Explore", desc: "Keep it gentle — wander, find a café, let her run. Save energy for Nara tomorrow.", icon: "🚶", type: "activity" },
       { time: "Dinner", name: "Osaka Street Food", desc: "Osaka is Japan's food capital. Takoyaki (octopus balls) and okonomiyaki are toddler-approved street food adventures.", icon: "🐙", type: "food", maps: "Dotonbori Osaka" },
     ]

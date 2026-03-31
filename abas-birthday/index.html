@@ -147,14 +147,22 @@ const days = [
     ]
   },
   {
-    tab: "Aug 14", title: "Homeward Bound", date: "August 14",
-    subtitle: "Back to Brooklyn with full hearts", progress: 100,
+    tab: "Aug 14", title: "Last Day at the Resort", date: "August 14",
+    subtitle: "One final morning by the sea", progress: 88,
     hotel: { name: "Valle dell'Erica Resort Thalasso & SPA", icon: "🌊" },
     stops: [
       { time: "Morning", name: "Last Breakfast at the Resort", desc: "Take your time. One final espresso by the sea. Pack up unhurriedly.", icon: "☕", type: "food" },
-      { time: "Late Morning", name: "Check Out", desc: "Say goodbye to Valle dell'Erica. Carry the blue water with you.", icon: "🌊", type: "hotel", maps: "Valle dell'Erica Resort Santa Teresa Gallura" },
-      { time: "Transfer", name: "Drive to Olbia Airport", desc: "About 1 hour back to OLB. The Sardinian granite hills and cork oak forests make for a beautiful farewell drive.", icon: "🚗", type: "travel", maps: "Olbia Costa Smeralda Airport" },
-      { time: "Flight", name: "Fly Home to Brooklyn", desc: "Homeward bound, tanned, rested, and full of memories. What a birthday.", icon: "✈️", type: "travel" },
+      { time: "Late Morning", name: "Final Beach Hour", desc: "One last dip. She won't want to leave — let her stay a little longer.", icon: "🏖️", type: "beach" },
+      { time: "Afternoon", name: "Check Out", desc: "Say goodbye to Valle dell'Erica. Carry the blue water with you.", icon: "🌊", type: "hotel", maps: "Valle dell'Erica Resort Santa Teresa Gallura" },
+      { time: "Evening", name: "Last Night in Sardinia", desc: "Stay near the airport in Olbia or enjoy a final Sardinian dinner before tomorrow's early start.", icon: "🌅", type: "food", maps: "Olbia Sardinia" },
+    ]
+  },
+  {
+    tab: "Aug 15", title: "Fly Home to Brooklyn", date: "August 15",
+    subtitle: "OLB → JFK · Homeward bound", progress: 100,
+    stops: [
+      { time: "10:55", name: "Delta DL0217 · OLB → JFK", desc: "Olbia (OLB) → New York JFK Terminal 4 · Arrives 14:39 · 9h 44m · Boeing 767-300 · Delta One Classic · Seats 1C, 1A, 1B · 3 passengers.", icon: "✈️", type: "travel", maps: "Olbia Costa Smeralda Airport" },
+      { time: "14:39", name: "Arrive JFK — Welcome Home 🎉", desc: "Terminal 4. You're back in Brooklyn. Tanned, rested, and full of the most wonderful memories.", icon: "🏡", type: "hotel", maps: "JFK Terminal 4" },
     ]
   }
 ];
